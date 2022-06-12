@@ -1,0 +1,8 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block button1 %}  
+<h4>Djs</h4> 
+<br>             
+<a class="btn btn-primary btn-xl text-uppercase" href="{% url 'djBusqueda' %}">Buscar</a>
+<a class="btn btn-primary btn-xl text-uppercase" href="{% url 'djFormulario' %}">Registrar</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+                
+<form action="{% url 'bartenderBuscar' %}" method="GET">    <!--Cuando hacemos un buscador usamos el metodo GET y no se usa token-->
+    <h1>Ingrese Estilo de Cocteleria</h1>
+    <input type="text" name="Estilo" placeholder="Estilo" id="Estilo" >
+    <input type="submit" value="Buscar">
+    
+</form>
+
+
+{% endblock %}

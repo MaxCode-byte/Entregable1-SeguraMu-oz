@@ -1,0 +1,10 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block button1 %}   
+<h4>Bartenders</h4> 
+<br>           
+<a class="btn btn-primary btn-xl text-uppercase" href="{% url 'bartenderBusqueda' %}">Buscar</a>
+<a class="btn btn-primary btn-xl text-uppercase" href="{% url 'bartenderFormulario' %}">Registrar</a>
+{% endblock %}
+
+<!--"{% url 'bartenderFormulario' %}"-->

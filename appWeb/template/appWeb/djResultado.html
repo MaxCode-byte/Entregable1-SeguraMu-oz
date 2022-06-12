@@ -1,0 +1,23 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Buscaste: {{especialidad}}</h1>
+
+{% if nombre %}
+
+<ul>
+<center>{% for dj in nombre %}
+  
+    <h3>
+    <li> {{dj.nombre}} </li>
+    <li> {{dj.especialidad}} </li>
+    </h3>
+    <br>
+</center>{% endfor %}
+
+</ul>
+
+
+{% endif %}
+
+{% endblock %}
