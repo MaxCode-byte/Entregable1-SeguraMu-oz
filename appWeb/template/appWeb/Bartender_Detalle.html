@@ -1,0 +1,19 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Datos Bartender</h1>
+<br>
+<br>
+<center>
+<p>NOMBRE: {{Bartender.nombre}}</p>
+<p>APELLIDO: {{Bartender.apellido}}</p>
+<p>EDAD: {{Bartender.edad}}</p>
+<p>ESPECIALIDAD: {{Bartender.especialidad}}</p>
+<br>
+<p>
+<a href="{% url 'Bartender_list' %}" class="button1">Volver a la lista</a> 
+</p>
+</center>
+
+
+{% endblock %}

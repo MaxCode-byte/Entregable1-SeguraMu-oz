@@ -3,6 +3,8 @@ from django.template import loader
 from django.http import HttpResponse
 from appWeb.models import *       # Como se vio antes, from AppCoder(Carpeta).models(archivo dentro de la carpeta) import Curso(Funcion)
 from appWeb.forms import *
+from django.views.generic import *
+from django.urls import reverse_lazy
 
 #------------ Pagina de inicio---------------
 
@@ -22,58 +24,6 @@ def Bartenders (request):
 def Mozos (request):
     return render(request, 'appWeb/mozosinicio.html')
 
-#------------ Paginas de Forms ---------------
-
-def djFormulario (request):
-    if request.method == 'POST':
-        djForm = DjFormulario(request.POST)
-        print(djForm)
-        if djForm.is_valid:       
-            info = djForm.cleaned_data
-            n = info['nombre']
-            a = info['apellido']
-            y = info['edad']
-            e = info['especialidad']
-            djs = dj(nombre=n, apellido=a, edad=y, especialidad=e)
-            djs.save()
-            return render(request, 'appWeb/inicio.html')
-    else:
-        djForm = DjFormulario()
-    return render(request, 'appWeb/djFormulario.html', {'djForm':djForm})
-
-def bartenderFormulario (request):
-    if request.method == 'POST':
-        bartenderForm = BartenderFormulario(request.POST)
-        print(bartenderForm)
-        if bartenderForm.is_valid:       
-            info = bartenderForm.cleaned_data
-            n = info['nombre']
-            a = info['apellido']
-            y = info['edad']
-            t = info['estilo']
-            bartenders = Bartender(nombre=n, apellido=a, edad=y, estilo=t)
-            bartenders.save()
-            return render(request, 'appWeb/inicio.html')
-    else:
-        bartenderForm = BartenderFormulario()
-    return render(request, 'appWeb/bartenderFormulario.html', {'bartenderForm':bartenderForm})
-
-def mozoFormulario (request):
-    if request.method == 'POST':
-        mozoForm = MozoFormulario(request.POST)
-        print(mozoForm)
-        if mozoForm.is_valid:       
-            info = mozoForm.cleaned_data
-            n = info['nombre']
-            a = info['apellido']
-            y = info['edad']
-            s = info['sector']
-            mozos = Mozo(nombre=n, apellido=a, edad=y, sector=s)
-            mozos.save()
-            return render(request, 'appWeb/inicio.html')
-    else:
-        mozoForm = MozoFormulario()
-    return render(request, 'appWeb/mozoFormulario.html', {'mozoForm':mozoForm})
 
 
 #------------ Paginas de Busqueda ---------------
@@ -116,4 +66,82 @@ def mozobuscar (request):
     return HttpResponse(respuesta) 
 
 
+#---------------------------------------------- Vistas por clases ------------------------------
+
+
+#---------------------------------------------- Read ------------------------------
+
+class djList (ListView):
+    model = dj
+    template_name = 'appWeb/dj_list.html'
+
+class BartenderList (ListView):
+    model = Bartender
+    template_name = 'appWeb/Bartender.html'
+
+class MozoList (ListView):
+    model = Mozo
+    template_name= 'appWeb/Mozo.html'
+
+#---------------------------------------------- Detail ------------------------------
+
+class djDetail (DetailView):
+    model = dj
+    template_name= 'appWeb/dj_Detalle.html'
+
+class BartenderDetail (DetailView):
+    model = Bartender
+    template_name= 'appWeb/Bartender_Detalle.html'
+
+class MozoDetail (DetailView):
+    model = Mozo
+    template_name= 'appWeb/Mozo_Detalle.html'
+
+#---------------------------------------------- Create ------------------------------
+
+class djCreate (CreateView):
+    model = dj
+    success_url= reverse_lazy('dj_list')
+    fields = ['nombre', 'apellido', 'edad', 'especialidad']
+
+class BartenderCreate (CreateView):
+    model = Bartender
+    success_url= reverse_lazy('Bartende_listr')
+    fields = ['nombre', 'apellido', 'edad', 'estilo']
+
+class MozoCreate (CreateView):
+    model = Mozo
+    success_url= reverse_lazy('Mozo_list')
+    fields = ['nombre', 'apellido', 'edad', 'sector']
+
+#---------------------------------------------- Update ------------------------------
+
+class djUpdate (UpdateView):
+    model = dj
+    success_url= reverse_lazy('dj_list')
+    fields = ['nombre', 'apellido', 'edad', 'especialidad']
+class BartenderUpdate (UpdateView):
+    model = Bartender
+    success_url= reverse_lazy('Bartender_list')
+    fields = ['nombre', 'apellido', 'edad', 'estilo']
+
+class MozoUpdate (UpdateView):
+    model = Mozo
+    success_url= reverse_lazy('Mozo_list')
+    fields = ['nombre', 'apellido', 'edad', 'sector']
+
+#---------------------------------------------- Update ------------------------------
+
+class djDelete (DeleteView):
+    model = dj
+    success_url= reverse_lazy('dj_list')
+    
+class BartenderDelete (DeleteView):
+    model = Bartender
+    success_url= reverse_lazy('Bartender_list')
+   
+
+class MozoDelete (DeleteView):
+    model = Mozo
+    success_url= reverse_lazy('Mozo_list')
     

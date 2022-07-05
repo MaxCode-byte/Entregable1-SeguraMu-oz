@@ -1,0 +1,16 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Eliminar Djs</h1>
+<br>
+<br>
+<br>
+<form method="POST"> {% csrf_token %}    <!--Se utiliza esta sintaxis para generar un token de POST-->
+   
+    Seguro que quiere eliminar a "{{object}}"
+    <br>
+    <input type="submit" value="Eliminar">
+    </center></div>
+</form>
+
+{% endblock %}

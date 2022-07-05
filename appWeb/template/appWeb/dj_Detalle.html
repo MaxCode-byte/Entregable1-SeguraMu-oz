@@ -1,0 +1,19 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Datos Dj</h1>
+<br>
+<br>
+<center>
+<p>NOMBRE: {{dj.nombre}}</p>
+<p>APELLIDO: {{dj.apellido}}</p>
+<p>EDAD: {{dj.edad}}</p>
+<p>ESPECIALIDAD: {{dj.especialidad}}</p>
+<br>
+<p>
+<a href="{% url 'dj_list' %}" class="button1">Volver a la lista</a> 
+</p>
+</center>
+
+
+{% endblock %}

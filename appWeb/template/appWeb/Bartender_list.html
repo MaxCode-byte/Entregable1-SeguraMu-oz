@@ -1,0 +1,22 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Lista Bartenders</h1>
+
+<center>
+{% for bartender in object_list %}
+    
+<h3>
+<br><li> {{bartender}} </li>
+</h3>    
+    
+    <a href="{% url 'Bartenderdetail' bartender.id %}" class="button1">Detalle</a>
+
+    <a href="{% url 'Bartenderupdate' bartender.id %}" class="button1">Editar</a>
+    
+    <a href="{% url 'Bartenderdelete' bartender.id %}" class="button1">Eliminar</a>
+    
+{% endfor %}
+</center>
+
+{% endblock %}

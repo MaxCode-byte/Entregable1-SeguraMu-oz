@@ -1,0 +1,19 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Datos Mozo</h1>
+<br>
+<br>
+<center>
+<p>NOMBRE: {{Mozo.nombre}}</p>
+<p>APELLIDO: {{Mozo.apellido}}</p>
+<p>EDAD: {{Mozo.edad}}</p>
+<p>ESPECIALIDAD: {{Mozo.especialidad}}</p>
+<br>
+<p>
+<a href="{% url 'Mozo_list' %}" class="button1">Volver a la lista</a> 
+</p>
+</center>
+
+
+{% endblock %}
