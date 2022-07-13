@@ -1,3 +1,5 @@
+
+from pickle import NONE
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
@@ -5,6 +7,11 @@ from appWeb.models import *       # Como se vio antes, from AppCoder(Carpeta).mo
 from appWeb.forms import *
 from django.views.generic import *
 from django.urls import reverse_lazy
+from django.contrib.auth.forms import *
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.views import LogoutView 
+from django.contrib.auth.mixins import *
+from django.contrib.auth.decorators import *
 
 #------------ Pagina de inicio---------------
 
@@ -27,7 +34,7 @@ def Mozos (request):
 
 
 #------------ Paginas de Busqueda ---------------
-
+@login_required
 def djBusqueda (request):
     return render(request, 'appWeb/djBusqueda.html')
 
@@ -40,6 +47,7 @@ def djbuscar (request):
         respuesta =  "No enviaste datos"
     return HttpResponse(respuesta) 
 
+@login_required
 def bartenderBusqueda (request):
     return render(request, 'appWeb/bartenderBusqueda.html')
 
@@ -52,7 +60,7 @@ def bartenderbuscar (request):
         respuesta =  "No enviaste datos"
     return HttpResponse(respuesta) 
 
-
+@login_required
 def mozoBusqueda (request):
     return render(request, 'appWeb/mozoBusqueda.html')
 
@@ -71,15 +79,15 @@ def mozobuscar (request):
 
 #---------------------------------------------- Read ------------------------------
 
-class djList (ListView):
+class djList (LoginRequiredMixin, ListView):
     model = dj
     template_name = 'appWeb/dj_list.html'
 
-class BartenderList (ListView):
+class BartenderList (LoginRequiredMixin, ListView):
     model = Bartender
     template_name = 'appWeb/Bartender.html'
 
-class MozoList (ListView):
+class MozoList (LoginRequiredMixin, ListView):
     model = Mozo
     template_name= 'appWeb/Mozo.html'
 
@@ -99,17 +107,17 @@ class MozoDetail (DetailView):
 
 #---------------------------------------------- Create ------------------------------
 
-class djCreate (CreateView):
+class djCreate (LoginRequiredMixin, CreateView):
     model = dj
     success_url= reverse_lazy('dj_list')
     fields = ['nombre', 'apellido', 'edad', 'especialidad']
 
-class BartenderCreate (CreateView):
+class BartenderCreate (LoginRequiredMixin, CreateView):
     model = Bartender
     success_url= reverse_lazy('Bartende_listr')
     fields = ['nombre', 'apellido', 'edad', 'estilo']
 
-class MozoCreate (CreateView):
+class MozoCreate (LoginRequiredMixin, CreateView):
     model = Mozo
     success_url= reverse_lazy('Mozo_list')
     fields = ['nombre', 'apellido', 'edad', 'sector']
@@ -144,4 +152,37 @@ class BartenderDelete (DeleteView):
 class MozoDelete (DeleteView):
     model = Mozo
     success_url= reverse_lazy('Mozo_list')
-    
+
+#---------------------------------------------- Login ------------------------------
+def login_request (request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data.get("username")
+            clave = form.cleaned_data.get("password")
+            user = authenticate(username=usuario, password=clave)
+            if user is not None:
+                login(request, user)
+                return render (request, 'appWeb/loginHome.html', {'mensaje': f'Bienvenido {usuario}'})
+            else:
+                return render (request, 'appWeb/loginHome.html', {'mensaje': 'Datos incorrectos'})
+        else: 
+            return render (request, 'appWeb/loginHome.html',{'mensaje': 'Error en el Formulario'})
+    else:
+        form = AuthenticationForm()
+        return render (request, 'appWeb/login.html', {'form': form})
+
+#---------------------------------------------- Register ------------------------------
+
+def register_request(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            form.save()
+            return render (request, "appWeb/loginHome.html", {'mensaje': 'Usuario creado exitosamente'})
+        else:
+            return render (request, "appWeb/loginHome.html", {'mensaje': 'Error en la creacion del usuario'})   
+    else: 
+        form = UserRegistrationForm()
+        return render (request, "appWeb/register.html", {'form': form}) 

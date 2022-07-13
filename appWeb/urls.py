@@ -38,4 +38,10 @@ urlpatterns = [
     path('Dj/delete/<pk>', djDelete	.as_view(), name='Djdelete'),
     path('Bartender/delete/<pk>', BartenderDelete.as_view(), name='Bartenderdelete'),
     path('Mozo/delete/<pk>', MozoDelete.as_view(), name='Mozodelete'),
+    #------------------- Login ------------------
+    path('login', login_request, name='login'),
+    #------------------- Reister ------------------
+    path('register', register_request, name='register'),
+    #------------------- LogOut ------------------
+    path('logout', LogoutView.as_view(template_name='appWeb/logout.html'), name='logout')
 ]
