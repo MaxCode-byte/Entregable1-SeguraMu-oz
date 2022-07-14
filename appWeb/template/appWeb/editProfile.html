@@ -1,0 +1,19 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Editar Perfil</h1>
+<br>
+<br>
+<br>
+
+<form action="{% url 'editprofile' %}" method="POST"> {% csrf_token %}    <!--Se utiliza esta sintaxis para generar un token de POST-->
+   
+    <h4>Modificar datos</h4>
+    <br>
+    <center>
+    {{form.as_p}}
+    <input type="submit" value="Guardar">
+    </center>
+</form>
+
+{% endblock %}

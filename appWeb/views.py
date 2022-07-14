@@ -1,5 +1,5 @@
 
-from pickle import NONE
+
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
@@ -30,6 +30,12 @@ def Bartenders (request):
 
 def Mozos (request):
     return render(request, 'appWeb/mozosinicio.html')
+    
+def Suggestions (request):
+    return render(request, 'appWeb/suggestioninicio.html')
+    
+def AboutUs (request):
+    return render(request, 'appWeb/aboutus.html')
 
 
 
@@ -85,12 +91,15 @@ class djList (LoginRequiredMixin, ListView):
 
 class BartenderList (LoginRequiredMixin, ListView):
     model = Bartender
-    template_name = 'appWeb/Bartender.html'
+    template_name = 'appWeb/Bartender_list.html'
 
 class MozoList (LoginRequiredMixin, ListView):
     model = Mozo
-    template_name= 'appWeb/Mozo.html'
+    template_name= 'appWeb/Mozo_list.html'
 
+class SuggestionsList (ListView):
+    model = Suggestion
+    template_name= 'appWeb/suggestion_list.html'
 #---------------------------------------------- Detail ------------------------------
 
 class djDetail (DetailView):
@@ -105,6 +114,10 @@ class MozoDetail (DetailView):
     model = Mozo
     template_name= 'appWeb/Mozo_Detalle.html'
 
+class SuggestionsDetail (DetailView):
+    model = Suggestion
+    template_name= 'appWeb/suggestion_Detalle.html'
+
 #---------------------------------------------- Create ------------------------------
 
 class djCreate (LoginRequiredMixin, CreateView):
@@ -114,13 +127,18 @@ class djCreate (LoginRequiredMixin, CreateView):
 
 class BartenderCreate (LoginRequiredMixin, CreateView):
     model = Bartender
-    success_url= reverse_lazy('Bartende_listr')
+    success_url= reverse_lazy('Bartende_list')
     fields = ['nombre', 'apellido', 'edad', 'estilo']
 
 class MozoCreate (LoginRequiredMixin, CreateView):
     model = Mozo
     success_url= reverse_lazy('Mozo_list')
     fields = ['nombre', 'apellido', 'edad', 'sector']
+
+class SuggestionsCreate (CreateView):
+    model = Suggestion
+    success_url= reverse_lazy('Suggestion_list')
+    fields = ['nombre', 'titulo', 'contenido']
 
 #---------------------------------------------- Update ------------------------------
 
@@ -138,7 +156,7 @@ class MozoUpdate (UpdateView):
     success_url= reverse_lazy('Mozo_list')
     fields = ['nombre', 'apellido', 'edad', 'sector']
 
-#---------------------------------------------- Update ------------------------------
+#---------------------------------------------- Delete ------------------------------
 
 class djDelete (DeleteView):
     model = dj
@@ -148,10 +166,13 @@ class BartenderDelete (DeleteView):
     model = Bartender
     success_url= reverse_lazy('Bartender_list')
    
-
 class MozoDelete (DeleteView):
     model = Mozo
     success_url= reverse_lazy('Mozo_list')
+
+class SuggestionsDelete (LoginRequiredMixin, DeleteView):
+    model = Suggestion
+    success_url= reverse_lazy('Suggestion_list')
 
 #---------------------------------------------- Login ------------------------------
 def login_request (request):
@@ -186,3 +207,20 @@ def register_request(request):
     else: 
         form = UserRegistrationForm()
         return render (request, "appWeb/register.html", {'form': form}) 
+
+#---------------------------------------------- Edit Profile ------------------------------
+@login_required
+def editProfile (request):
+    usuario = request.user
+    if request.method =='POST':
+        form = UserEditForm(request.POST, instance=usuario)
+        if form.is_valid:
+            informacion = form.cleaned_data
+            usuario.email = informacion['email']
+            usuario.password1 = informacion['password1']
+            usuario.password2 = informacion['password2']
+            usuario.save()
+            return render (request, "appWeb/loginHome.html", {'mensaje': 'Datos modificados exitosamente'})
+    else:
+        form = UserEditForm(instance=usuario)
+    return render (request,"appWeb/editProfile.html", {'form':form})

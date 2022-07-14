@@ -1,0 +1,21 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Detalle de la Sugerencia</h1>
+<br>
+<br>
+<center>
+<p>NOMBRE: {{suggestion.nombre}}</p>
+<p>TITULO: {{suggestion.titulo}}</p>
+<p>CONTENIDO: {{suggestion.contenido}}</p>
+<br>
+<p>
+<a href="{% url 'Suggestionsdelete' suggestion.id %}" class="button1">Eliminar</a>
+</p>
+<p>
+<a href="{% url 'Suggestion_list' %}" class="button1">Volver a la lista</a> 
+</p>
+</center>
+
+
+{% endblock %}

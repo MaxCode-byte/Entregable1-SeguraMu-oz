@@ -1,0 +1,8 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block button1 %}  
+<h4>Sugerencias</h4> 
+<br>             
+<a class="btn btn-primary btn-xl text-uppercase" href="{% url 'Suggestionscreate' %}">Registrar</a>
+<a class="btn btn-primary btn-xl text-uppercase" href="{% url 'Suggestion_list' %}">Ver Lista</a>
+{% endblock %}

@@ -11,7 +11,7 @@ class dj (models.Model):
     especialidad = models.CharField(max_length=40)
 
     def __str__(self) -> str:
-        return self.nombre +' '+ self.especialidad
+        return self.nombre +': '+ self.especialidad
 
 class Bartender (models.Model):
     nombre = models.CharField(max_length=40)
@@ -20,7 +20,7 @@ class Bartender (models.Model):
     estilo = models.CharField(max_length=40)
     
     def __str__(self) -> str:
-        return self.nombre +' '+ self.estilo
+        return self.nombre +': '+ self.estilo
 
 
 class Mozo (models.Model):        
@@ -30,4 +30,12 @@ class Mozo (models.Model):
     sector = models.CharField(max_length=40)
     
     def __str__(self) -> str:
-        return self.nombre +' '+ self.sector
+        return self.nombre +': '+ self.sector
+
+class Suggestion (models.Model):        
+    nombre = models.CharField(max_length=40)
+    titulo = models.CharField(max_length=100)   
+    contenido = models.CharField(max_length=150)
+    
+    def __str__(self) -> str:
+        return self.nombre +': '+ self.titulo
