@@ -1,0 +1,19 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Nueva Sugerencia</h1>
+<br>
+<br>
+<br>
+
+<form method="POST"> {% csrf_token %}    <!--Se utiliza esta sintaxis para generar un token de POST-->
+   
+    <h4>Informacion</h4>
+    <br>
+    <center>
+    {{form.as_p}}
+    <input type="submit" value="Enviar">
+    </center>
+</form>
+
+{% endblock %}

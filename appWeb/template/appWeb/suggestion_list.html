@@ -1,0 +1,20 @@
+{% extends 'appWeb/padre.html' %}
+{% load static %}
+{% block section1 %}
+<h1>Sugerencias</h1>
+
+<center>
+{% for sg in object_list %}
+    
+<h3>
+<br><li> {{sg}} </li>
+</h3>    
+    
+    <a href="{% url 'Suggestionsdetail' sg.id %}" class="button1">Detalle</a>
+
+{% endfor %}
+</center>
+<br>
+<br>
+<center><a href="{% url 'Suggestionscreate' %}" class="button1">Crear</a></center>
+{% endblock %}
