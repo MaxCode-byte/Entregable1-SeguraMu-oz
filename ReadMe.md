@@ -36,3 +36,5 @@ Club Nocturno Unplugged
 Actualemente como disponemos de una sola computadora, el grupo se dividio las tareas en dos:
 		Front-end designer: Estuvo a cargo de Melina Muñoz
 		Back-end programer: Fue realizado por ambos participantes, Maximiliano Segura y Melina Muñoz, con mayor participacion de Maximiliano
+
+Video de presentacion: https://youtu.be/-wZUkr1XJjg
